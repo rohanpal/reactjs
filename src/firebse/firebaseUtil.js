@@ -1,0 +1,28 @@
+import firebase from 'firebase/app'
+import 'firebase/firestore'
+import 'firebase/auth'
+
+
+//352928626895-e76k31cslbnke3gbk04485h452028i7a.apps.googleusercontent.com
+//YJv8HY2JDADETfHucFyG1wJI
+const firebaseConfig = {
+  apiKey: "AIzaSyBtKdb725h8dpkqhQ-pXk0EceiQymnlBVw",
+  authDomain: "shopit-2d775.firebaseapp.com",
+  databaseURL: "https://shopit-2d775.firebaseio.com",
+  projectId: "shopit-2d775",
+  storageBucket: "",
+  messagingSenderId: "516191259312",
+  appId: "1:516191259312:web:d90cbcf55d3dd64e"
+  };
+  firebase.initializeApp(firebaseConfig)
+export const auth = firebase.auth()
+export const firestore = firebase.firestore()
+
+
+
+const provider = new firebase.auth.GoogleAuthProvider()
+provider.setCustomParameters({prompt:"select_account"})
+export const signInWithGoogle = ()=>{
+    auth.signInWithPopup(provider)
+}
+export default firebase
