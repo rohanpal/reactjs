@@ -3,8 +3,12 @@ import { Link } from "react-router-dom";
 import { ReactComponent as Logo } from "../../assets/logo/crown.svg";
 import { auth } from "../../firebse/firebaseUtil";
 import {connect} from 'react-redux'
+import CartIcon from '../cart/cart'
+import CartDropDown from '../cartDroprDown/cartDropDown'
+import {toggleCart} from '../../redux/cart/actions'
 import "./header.scss";
-const header = props => {
+
+const header = ({currentUser,hidden,toggleCart}) => {
   return (
     <div className="header">
       <Link to="/" className="logo-container">
@@ -17,7 +21,7 @@ const header = props => {
         <Link className="option" to="/contact">
           CONTACT
         </Link>
-        {props.currentUser ? (
+        {currentUser ? (
           <div onClick={() => auth.signOut()} className="option">
             Sign Out
           </div>
@@ -26,12 +30,15 @@ const header = props => {
             LOGIN
           </Link>
         )}
+        <CartIcon />
       </div>
+      {!hidden && <CartDropDown/>}
     </div>
   );
 };
 
-const mapStateToProps = state=>({
-  currentUser:state.user.currentUser
+const mapStateToProps = ({user:{currentUser},cart:{hidden}})=>({
+  currentUser,
+  hidden
 })
-export default connect(mapStateToProps)(header);
+export default connect(mapStateToProps,{toggleCart})(header);
